@@ -6,10 +6,11 @@ import { faPerson, faCalendarDays, faComments } from '@fortawesome/free-solid-sv
 const Header = () => {
     const navigate = useNavigate()
     return (
-        <Stack gap={10} direction={"row"} height={'3em'} alignItems={'center'} justifyContent={'center'}>
-            <Button leftIcon={<FontAwesomeIcon icon={faPerson}/>} onClick={() => navigate('/patients')} variant={'ghost'}>PATIENTS</Button>
-            <Button leftIcon={<FontAwesomeIcon icon={faCalendarDays}/>} onClick={() => navigate('/planning')} variant={'ghost'}>PLANNING</Button>
-            <Button leftIcon={<FontAwesomeIcon icon={faComments}/>} onClick={() => navigate('/messages')} variant={'ghost'}>MESSAGES</Button>
+        <Stack gap={10} p='7' direction={"row"} height={'3em'} alignItems={'center'} bg='gray.100'>
+            <Button colorScheme={'blue'} variant={'unstyled'} onClick={() => navigate('/')}>Windoge</Button>
+            <Button leftIcon={<FontAwesomeIcon icon={faPerson}/>} onClick={() => navigate('/patients')} variant={'unstyled'}>Patients</Button>
+            <Button leftIcon={<FontAwesomeIcon icon={faCalendarDays}/>} onClick={() => navigate('/planning')} variant={'unstyled'}>Planning</Button>
+            <Button leftIcon={<FontAwesomeIcon icon={faComments}/>} onClick={() => navigate('/messages')} variant={'unstyled'}>Messages</Button>
         </Stack>
     )
 }
