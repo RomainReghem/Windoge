@@ -13,7 +13,7 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 const Patient = () => {
     return (
         <>
-            <Stack p='4' w={'40%'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
+            <Stack p='4' w={'xl'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
                 <Stack direction={'row'} justifyContent='space-between'>
                     <Heading fontSize={'2xl'}>Patrick Balkany</Heading>
                     <IconButton colorScheme={'blue'} size={'sm'} icon={<FontAwesomeIcon icon={faPenToSquare} />}></IconButton>

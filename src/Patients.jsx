@@ -7,7 +7,7 @@ import Patient from "./Patient"
 const Patients = () => {
     return (
         <Center flexDirection={'column'} flexGrow='1' gap='4' px='4' py={8} >
-            <Stack w='40%' direction={'row'}>
+            <Stack w={'xl'} direction={'row'}>
             <InputGroup>
                 <InputLeftElement
                     pointerEvents='none'
