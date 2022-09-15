@@ -19,7 +19,6 @@ const Patients = () => {
 
     const handleChange = e => {
         setResearch(e.target.value.toUpperCase())
-        console.log(e.target.value)
     }
 
     return (
