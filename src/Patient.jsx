@@ -8,20 +8,41 @@ import {
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from "react";
 
 
-const Patient = () => {
+const Patient = ({ infos }) => {
+
+    const [name, setName] = useState("Unknown");
+    const [gender, setGender] = useState("Unknown gender");
+    const [birth, setBirth] = useState("Unknown birth date");
+
+    useEffect(() => {
+        if(infos.name){
+            try {
+                setName(infos.name[0].family)
+            } catch (error) {
+                
+            }
+        }
+        infos.birthDate && setBirth(infos.birthDate)
+        infos.gender && setGender(infos.gender)
+
+    }, [infos])
+
+
+
     return (
         <>
             <Stack p='4' w={'xl'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
                 <Stack direction={'row'} justifyContent='space-between'>
-                    <Heading fontSize={'2xl'}>Patrick Balkany</Heading>
+                    <Heading fontSize={'2xl'}>{name}</Heading>
                     <IconButton colorScheme={'blue'} size={'sm'} icon={<FontAwesomeIcon icon={faPenToSquare} />}></IconButton>
                 </Stack>
                 <Divider></Divider>
                 <Stack>
-                    <Text>Male</Text>
-                    <Text>25/12/1974 (23 ans)</Text>
+                    <Text>{gender}</Text>
+                    <Text>{birth}</Text>
                 </Stack>
                 <Accordion allowToggle>
                     <AccordionItem>
