@@ -16,8 +16,15 @@ const Patient = ({ infos, highlight }) => {
     const [name, setName] = useState("Unknown");
     const [gender, setGender] = useState("Unknown gender");
     const [birth, setBirth] = useState("Unknown birth date");
+    const [observations, setObservations] = useState(null);
 
     useEffect(() => {
+        if (infos.id) {
+            fetch(`https://fhir.alliance4u.io/api/observation?subject.reference=Patient/${infos.id}`)
+                .then(response => response.json())
+                .then(data => setObservations(data));
+        }
+
         if (infos.name) {
             try {
                 setName(`${infos.name[0].given} ${infos.name[0].family}`)
@@ -49,39 +56,33 @@ const Patient = ({ infos, highlight }) => {
                     <Text>{birth}</Text>
                 </Stack>
                 <Accordion allowToggle>
-                    <AccordionItem>
-                        <Heading>
-                            <AccordionButton>
-                                <Box flex='1' textAlign='left'>
-                                    Observation 1
-                                </Box>
-                                <AccordionIcon />
-                            </AccordionButton>
-                        </Heading>
-                        <AccordionPanel pb={4}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
-                        </AccordionPanel>
-                    </AccordionItem>
+                    {
+                        observations?.map((element, index) => {
+                            try {
+                                return (
+                                <AccordionItem key={index}>
+                                    <Heading>
+                                        <AccordionButton>
+                                            <Box flex='1' textAlign='left'>
+                                                Observation {index+1} {element?.performer?.map((e) => `par ${e.display}`)}
+                                            </Box>
+                                            <AccordionIcon />
+                                        </AccordionButton>
+                                    </Heading>
+                                    <AccordionPanel pb={4}>
+                                        {element.code?.coding[0].display} : {element.valueQuantity?.value}{element.valueQuantity?.unit}
 
-                    <AccordionItem>
-                        <Heading>
-                            <AccordionButton>
-                                <Box flex='1' textAlign='left'>
-                                    Observation 2
-                                </Box>
-                                <AccordionIcon />
-                            </AccordionButton>
-                        </Heading>
-                        <AccordionPanel pb={4}>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.
-                        </AccordionPanel>
-                    </AccordionItem>
+                                    </AccordionPanel>
+                                </AccordionItem>
+                            )
+                            } catch (error) {
+                                console.error("problème de formattage dans les observations")
+                            }
+                            
+
+                        })
+                    }
+
                 </Accordion>
             </Stack>
         </>
