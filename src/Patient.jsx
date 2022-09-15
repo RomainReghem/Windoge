@@ -1,4 +1,4 @@
-import { Divider, IconButton, Stack, Text, Box, Heading } from "@chakra-ui/react";
+import { Divider, IconButton, Stack, Text, Box, Heading, Highlight } from "@chakra-ui/react";
 import {
     Accordion,
     AccordionItem,
@@ -11,18 +11,18 @@ import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from "react";
 
 
-const Patient = ({ infos }) => {
+const Patient = ({ infos, highlight }) => {
 
     const [name, setName] = useState("Unknown");
     const [gender, setGender] = useState("Unknown gender");
     const [birth, setBirth] = useState("Unknown birth date");
 
     useEffect(() => {
-        if(infos.name){
+        if (infos.name) {
             try {
-                setName(infos.name[0].family)
+                setName(`${infos.name[0].given} ${infos.name[0].family}`)
             } catch (error) {
-                
+
             }
         }
         infos.birthDate && setBirth(infos.birthDate)
@@ -30,13 +30,24 @@ const Patient = ({ infos }) => {
 
     }, [infos])
 
+    useEffect(() => {
+        console.log(highlight)
+    }, [highlight])
+
 
 
     return (
         <>
             <Stack p='4' w={'xl'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
                 <Stack direction={'row'} justifyContent='space-between'>
-                    <Heading fontSize={'2xl'}>{name}</Heading>
+                    <Heading fontSize={'2xl'}>
+                        {highlight == "" ? name
+                            :
+                            <Highlight query={highlight} styles={{ px: '1', py: '1', bg: 'orange.100' }}>
+                                {name}
+                            </Highlight>
+                        }
+                    </Heading>
                     <IconButton colorScheme={'blue'} size={'sm'} icon={<FontAwesomeIcon icon={faPenToSquare} />}></IconButton>
                 </Stack>
                 <Divider></Divider>
@@ -66,8 +77,8 @@ const Patient = ({ infos }) => {
                         <Heading>
                             <AccordionButton>
                                 <Box flex='1' textAlign='left'>
-                                    Observation 2                                
-                                    </Box>
+                                    Observation 2
+                                </Box>
                                 <AccordionIcon />
                             </AccordionButton>
                         </Heading>
