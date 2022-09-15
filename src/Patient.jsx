@@ -38,12 +38,12 @@ const Patient = ({ infos, highlight }) => {
     }, [infos])
     return (
         <>
-            <Stack p='4' w={'xl'} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
+            <Stack p='4' w={{base:'xs', md:'xl'}} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
                 <Stack direction={'row'} justifyContent='space-between'>
                     <Heading fontSize={'2xl'}>
                         {highlight == "" ? name
                             :
-                            <Highlight query={highlight} styles={{ px: '1', py: '1', bg: 'orange.100' }}>
+                            <Highlight query={highlight} styles={{ px: '0.2', py: '1', bg: 'orange.100' }}>
                                 {name}
                             </Highlight>
                         }
@@ -62,7 +62,7 @@ const Patient = ({ infos, highlight }) => {
                                 return (
                                 <AccordionItem key={index}>
                                     <Heading>
-                                        <AccordionButton>
+                                        <AccordionButton bg={'blue.50'}>
                                             <Box flex='1' textAlign='left'>
                                                 Observation {index+1} {element?.performer?.map((e) => `par ${e.display}`)}
                                             </Box>

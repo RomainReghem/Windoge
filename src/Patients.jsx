@@ -23,7 +23,7 @@ const Patients = () => {
 
     return (
         <Stack alignItems={'center'} flexDirection={'column'} flexGrow='1' gap='4' px='4' py={8} >
-            <Stack w={'xl'} direction={'row'}>
+            <Stack w={{base:'xs', md:'xl'}} direction={'row'}>
                 <InputGroup>
                     <InputLeftElement
                         pointerEvents='none'
