@@ -13,13 +13,13 @@ import FormulairePatient from './FormulairePatient'
 function App() {
   return (
     <>
-      <Header/>
+      <Header />
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/patients' element={<Patients/>} />
-        <Route path='/planning' element={<Planning/>} />
-        <Route path='/messages' element={<Messages/>} />
-        <Route path='/formulairepatient' element={<FormulairePatient/>}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/patients' element={<Patients />} />
+        <Route path='/planning' element={<Planning />} />
+        <Route path='/messages' element={<Messages />} />
+        <Route path='/formulairepatient' element={<FormulairePatient />} />
       </Routes>
     </>
   )
