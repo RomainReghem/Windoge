@@ -3,6 +3,10 @@ html, body, #root{
     overflow-x: hidden;
 }
 
+.customH{
+  min-height:calc(100% - 58px);
+}
+
 #root{
     display:flex;
     flex-direction: column;
