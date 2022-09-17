@@ -43,12 +43,12 @@ const Patient = ({ infos, highlight }) => {
                     <Heading fontSize={'2xl'}>
                         {highlight == "" ? name
                             :
-                            <Highlight query={highlight} styles={{ px: '0.2', py: '1', bg: 'orange.100' }}>
+                            <Highlight query={highlight} styles={{ px: '0.2', py: '1', bg: 'tan.100' }}>
                                 {name}
                             </Highlight>
                         }
                     </Heading>
-                    <IconButton colorScheme={'blue'} size={'sm'} icon={<FontAwesomeIcon icon={faPenToSquare} />}></IconButton>
+                    <IconButton colorScheme={'celadon'} size={'sm'} icon={<FontAwesomeIcon icon={faPenToSquare} />}></IconButton>
                 </Stack>
                 <Divider></Divider>
                 <Stack>
@@ -62,7 +62,7 @@ const Patient = ({ infos, highlight }) => {
                                 return (
                                 <AccordionItem key={index}>
                                     <Heading>
-                                        <AccordionButton bg={'blue.50'}>
+                                        <AccordionButton bg={'celadon.50'} _hover={{backgroundColor:'#c2deee'}}>
                                             <Box flex='1' textAlign='left'>
                                                 Observation {index+1} {element?.performer?.map((e) => `par ${e.display}`)}
                                             </Box>

@@ -6,11 +6,11 @@ import { faPerson, faCalendarDays, faComments, faShieldDog, faDog } from '@forta
 const Header = () => {
     const navigate = useNavigate()
     return (
-        <Stack gap={10} p='7' direction={"row"} height={'3em'} alignItems={'center'} bg='gray.100'>
+        <Stack gap={10} p='7' direction={"row"} height={'3em'} alignItems={'center'} bg='celadon.500'>
             <Button colorScheme={'blue'} variant={'unstyled'} onClick={() => navigate('/')}><Image height={'100%'} src="src\assets\windoge.png"></Image></Button>
-            <Button leftIcon={<FontAwesomeIcon icon={faPerson}/>} onClick={() => navigate('/patients')} variant={'unstyled'}>Patients</Button>
-            <Button leftIcon={<FontAwesomeIcon icon={faCalendarDays}/>} onClick={() => navigate('/planning')} variant={'unstyled'}>Planning</Button>
-            <Button leftIcon={<FontAwesomeIcon icon={faComments}/>} onClick={() => navigate('/messages')} variant={'unstyled'}>Messages</Button>
+            <Button color={'white'} leftIcon={<FontAwesomeIcon icon={faPerson}/>} onClick={() => navigate('/patients')} variant={'unstyled'}>Patients</Button>
+            <Button color={'white'}leftIcon={<FontAwesomeIcon icon={faCalendarDays}/>} onClick={() => navigate('/planning')} variant={'unstyled'}>Planning</Button>
+            <Button color={'white'} leftIcon={<FontAwesomeIcon icon={faComments}/>} onClick={() => navigate('/messages')} variant={'unstyled'}>Messages</Button>
         </Stack>
     )
 }

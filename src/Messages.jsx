@@ -1,6 +1,9 @@
-import { Text, Badge, Stack, Center, Box, Button, Input, Spinner } from "@chakra-ui/react";
+import { Text, Badge, Stack, Center, Box, Button, Input, Spinner, IconButton, Tooltip } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import Message from "./Message";
+import Destinataire from "./Destinataire";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotateRight } from "@fortawesome/free-solid-svg-icons";
 
 const Messages = () => {
     const inputRef = useRef(null);
@@ -12,69 +15,70 @@ const Messages = () => {
     const [sentMessages, setSentMessages] = useState(null)
     const [allMessages, setAllMessages] = useState(null);
     const [sendingMessage, setSendingMessage] = useState(false);
+    const [fetchingMessages, setFetchingMessages] = useState(false);
 
     const handleClick = async () => {
         setSendingMessage(true)
         try {
             const rawResponse = await fetch('https://fhir.alliance4u.io/api/communication', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    resourceType: "Communication",
-                    sent: new Date(),
-                    sender: {
-                        reference: `Practitioner/${refMedecin}`,
-                    },
-                    recipient: [{ reference: `Patient/${chosen}` }],
-                    payload: [{ contentString: inputRef.current.value }]
-                }
-            )
-        });
-        inputRef.current.value = "";
-        loadMessages();
-        setSendingMessage(false)
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        resourceType: "Communication",
+                        sent: new Date(),
+                        sender: {
+                            reference: `Practitioner/${refMedecin}`,
+                        },
+                        recipient: [{ reference: `Patient/${chosen}` }],
+                        payload: [{ contentString: inputRef.current.value }]
+                    }
+                )
+            });
+            inputRef.current.value = "";
+            loadMessages();
+            setSendingMessage(false)
         } catch (error) {
             setSendingMessage(false)
         }
-        
+
     }
 
-    const handleTestClick = async () => {
+    const handlePatientClick = async () => {
         setSendingMessage(true)
         try {
             const rawResponse = await fetch('https://fhir.alliance4u.io/api/communication', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    resourceType: "Communication",
-                    sent: new Date(),
-                    sender: {
-                        reference: `Patient/${chosen}`,
-                    },
-                    recipient: [{ reference: `Practitioner/${refMedecin}` }],
-                    payload: [{ contentString: inputRef.current.value }]
-                }
-            )
-        });
-        inputRef.current.value = "";
-        loadMessages();
-        setSendingMessage(false)
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        resourceType: "Communication",
+                        sent: new Date(),
+                        sender: {
+                            reference: `Patient/${chosen}`,
+                        },
+                        recipient: [{ reference: `Practitioner/${refMedecin}` }],
+                        payload: [{ contentString: inputRef.current.value }]
+                    }
+                )
+            });
+            inputRef.current.value = "";
+            loadMessages();
+            setSendingMessage(false)
         } catch (error) {
             setSendingMessage(false)
-        }        
+        }
     }
 
     useEffect(() => {
         loadMessages();
-    }, [])
+    }, [chosen])
 
     useEffect(() => {
         if (sentMessages || receivedMessages) {
@@ -88,35 +92,69 @@ const Messages = () => {
         }
     }, [sentMessages, receivedMessages])
 
-    const loadMessages = () => {
-        //  https://fhir.alliance4u.io/api/communication?sender.reference=Patient/62f65031c87c9100196ec0a5
-        fetch(`https://fhir.alliance4u.io/api/communication?sender.reference=Patient/${chosen}&recipient.reference=Practitioner/${refMedecin}`)
+    const loadMessages = async () => {
+        setFetchingMessages(true)
+        await fetch(`https://fhir.alliance4u.io/api/communication?sender.reference=Patient/${chosen}&recipient.reference=Practitioner/${refMedecin}`)
             .then(response => response.json())
             .then(data => setReceivedMessages(data));
 
-        fetch(`https://fhir.alliance4u.io/api/communication?sender.reference=Practitioner/${refMedecin}&recipient.reference=Patient/${chosen}`)
+        await fetch(`https://fhir.alliance4u.io/api/communication?sender.reference=Practitioner/${refMedecin}&recipient.reference=Patient/${chosen}`)
             .then(response => response.json())
             .then(data => setSentMessages(data));
+        setFetchingMessages(false)
     }
+
+    // const createPatient = async () => {
+    //     const rawResponse = await fetch('https://fhir.alliance4u.io/api/patient', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Accept': 'application/json',
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(
+    //             {
+    //                 resourceType: "Patient",
+    //                 name: [
+    //                     {
+    //                         family: "Pat",
+    //                         given: [
+    //                             "Patrouille"
+    //                         ]
+    //                     },
+    //                 ],
+    //                 generalPractitioner: [
+    //                     {
+    //                         reference: "6321e0f8d83022001917f14b",
+    //                         type: "Practitioner"
+    //                     }
+    //                 ],
+    //                 gender: "male",
+    //                 birthDate: "2000-12-19",
+    //             }
+    //         )
+    //     })
+    // }
 
     return (
         <>
             <Stack className="customH" direction="row">
-                <Stack w={'2xs'} borderRight={'1px solid'} borderColor='gray.200'>
-
-                </Stack>
+                <Destinataire onSelection={setChosen} />
                 <Stack h={'100%'} flexGrow={1} p='4'>
                     <Stack className="customH" overflow='scroll' direction={'column-reverse'}>
+                        <Tooltip bg={'green.500'} placement="top" label='Charger les nouveaux messages'>
+                            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} />} onClick={loadMessages} isLoading={fetchingMessages} alignSelf={'center'} colorScheme='green' rounded={'full'} p='3' variant={'solid'}></IconButton>
+                        </Tooltip>
                         {
                             allMessages?.map((element, index) => {
                                 return <Message key={index} alignement={element?.sender?.reference.includes("Practitioner") ? "end" : "start"} content={element?.payload[0].contentString} />
                             })
                         }
+
                     </Stack>
                     <Stack h={'50px'} direction={'row'} align={'center'}>
                         <Input ref={inputRef} placeholder='Aa'></Input>
-                        <Button isLoading={sendingMessage} colorScheme={'purple'} onClick={handleClick} noOfLines='1'>Envoyer (Médecin)</Button>
-                        <Button isLoading={sendingMessage} colorScheme={'yellow'} onClick={handleTestClick} noOfLines='1'>Envoyer (Patient)</Button>
+                        <Button isLoading={sendingMessage} colorScheme={'celadon'} onClick={handleClick}>Médecin</Button>
+                        <Button isLoading={sendingMessage} colorScheme={'tan'} onClick={handlePatientClick}>Patient</Button>
                     </Stack>
                 </Stack>
             </Stack>
