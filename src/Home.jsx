@@ -20,7 +20,7 @@ const Home = () => {
                         <Text fontWeight={'600'}>Password</Text>
                         <Input variant='filled' placeholder='Enter your password'></Input>
                     </Stack>
-                    <Stack width='xs'>
+                    <Stack width='xs' align='center'>
                         <Button width='30%'
                             colorScheme={'green'}
                             onClick={() => {
