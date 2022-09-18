@@ -7,8 +7,9 @@ import {
     AccordionIcon,
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons'
+import { faPenToSquare, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 
 const Patient = ({ infos, highlight }) => {
@@ -17,6 +18,7 @@ const Patient = ({ infos, highlight }) => {
     const [gender, setGender] = useState("Unknown gender");
     const [birth, setBirth] = useState("Unknown birth date");
     const [observations, setObservations] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (infos.id) {
@@ -48,7 +50,7 @@ const Patient = ({ infos, highlight }) => {
                             </Highlight>
                         }
                     </Heading>
-                    <IconButton colorScheme={'celadon'} size={'sm'} icon={<FontAwesomeIcon icon={faPenToSquare} />}></IconButton>
+                    <IconButton onClick={() => navigate({pathname:"/dossier", search:createSearchParams({ref:infos?.id}).toString()})} colorScheme={'verdigris'} size={'sm'} icon={<FontAwesomeIcon icon={faFolderOpen} />}></IconButton>
                 </Stack>
                 <Divider></Divider>
                 <Stack>

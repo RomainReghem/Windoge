@@ -10,7 +10,7 @@ img {
 }
 
 .customH {
-  min-height: calc(100% - 58px);
+  min-height: calc(100% - 7rem);
 }
 
 #root {

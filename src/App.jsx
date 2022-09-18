@@ -9,6 +9,7 @@ import Patients from "./Patients";
 import Planning from "./Planning";
 import Messages from "./Messages";
 import FormulairePatient from './FormulairePatient'
+import Dossier from './Dossier'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/patients' element={<Patients />} />
+        <Route path='/dossier' element={<Dossier />}/>
         <Route path='/planning' element={<Planning />} />
         <Route path='/messages' element={<Messages />} />
         <Route path='/formulairepatient' element={<FormulairePatient />} />

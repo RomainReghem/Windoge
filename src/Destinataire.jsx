@@ -16,7 +16,7 @@ const Destinataire = (props) => {
     }
 
     return (
-        <Stack w={'2xs'} borderRight={'1px solid'} borderColor='gray.200' p={'4'} overflow='scroll'>
+        <Stack w={'2xs'} borderRight={'1px solid'} borderColor='gray.300' p={'4'} overflow='scroll'>
             <Heading fontSize={'xl'}>Your patients</Heading>
             <Divider></Divider>
             <Button onClick={() => { handleSelectPatient("62f65031c87c9100196ec0a5"); setSelected(667) }} key={667} p='4' variant={667 == selected ? 'solid' : 'outline'} colorScheme={'gray'} cursor={'pointer'}>
