@@ -67,7 +67,7 @@ const Patient = ({ infos, highlight }) => {
                                     <AccordionItem key={index}>
                                         <Heading>
                                             <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
-                                                <Box flex='1' textAlign='left'>
+                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
                                                     Observation {index + 1} {element?.performer?.map((e) => `par ${e.display}`)}
                                                 </Box>
                                                 <AccordionIcon />
@@ -82,7 +82,6 @@ const Patient = ({ infos, highlight }) => {
                             } catch (error) {
                                 console.error("problème de formattage dans les observations")
                             }
-
 
                         })
                     }

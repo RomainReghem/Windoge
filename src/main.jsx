@@ -4,8 +4,21 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import App from './App'
 import { ChakraProvider } from '@chakra-ui/react'
 import { extendTheme } from "@chakra-ui/react"
+import '@fontsource/sora/700.css'
+import '@fontsource/encode-sans/700.css'
+import '@fontsource/inter/700.css'
 
 const theme = extendTheme({
+  fonts:{
+    heading:`'Inter', sans-serif`,
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        borderRadius: 'base', // Normally, it is "semibold"
+      },
+    }
+  },
   colors: {
     celadon:
     {

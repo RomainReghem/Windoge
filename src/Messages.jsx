@@ -4,7 +4,7 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import Message from "./Message";
 import Destinataire from "./Destinataire";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotateRight, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { faRotateRight, faFolderOpen, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const Messages = () => {
     const inputRef = useRef(null);
@@ -150,8 +150,8 @@ const Messages = () => {
                     </Box>
                     <Stack className="customHeight2" px='4' direction={'column-reverse'} overflowY='scroll'>
 
-                        <Tooltip bg={'green.500'} placement="top" label='Load new messages'>
-                            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} />} onClick={loadMessages} isLoading={fetchingMessages} alignSelf={'center'} colorScheme='green' rounded={'full'} p='2' size={'sm'} variant={'solid'}></IconButton>
+                        <Tooltip bg={'blue.500'} placement="top" label='Load new messages'>
+                            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} />} onClick={loadMessages} isLoading={fetchingMessages} alignSelf={'center'} colorScheme='blue' rounded={'full'} p='2' size={'sm'} variant={'solid'}></IconButton>
                         </Tooltip>
                         {
                             allMessages?.map((element, index) => {
@@ -162,8 +162,8 @@ const Messages = () => {
 
                     <Stack p='4' paddingTop={0} h={'50px'} direction={'row'} align={'center'}>
                         <Input ref={inputRef} placeholder='Aa'></Input>
-                        <Button isLoading={sendingMessage} colorScheme={'celadon'} onClick={handleClick}>Médecin</Button>
-                        <Button isLoading={sendingMessage} colorScheme={'tan'} onClick={handlePatientClick}>Patient</Button>
+                        <Button rightIcon={<FontAwesomeIcon icon={faPaperPlane}/>} isLoading={sendingMessage} colorScheme={'green'} onClick={handleClick}>Médecin</Button>
+                        <Button isLoading={sendingMessage} variant='outline' colorScheme={'green'} onClick={handlePatientClick}>Patient (test)</Button>
                     </Stack>
                 </Stack>
             </Stack>
