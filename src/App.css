@@ -9,8 +9,12 @@ img {
   filter: drop-shadow(0 0 0.7rem rgb(255, 255, 255));
 }
 
-.customH {
-  min-height: calc(100% - 7rem);
+.customHeight1 {
+  height: calc(100% - 3.5rem);
+}
+
+.customHeight2 {
+  height: calc(100% - 7rem);
 }
 
 #root {

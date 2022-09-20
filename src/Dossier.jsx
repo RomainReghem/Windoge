@@ -26,6 +26,7 @@ const Dossier = () => {
         <>
             <Heading>{name}</Heading>
             <Text>{searchParams?.get("ref")}</Text>
+            
         </>
 
     )

@@ -20,7 +20,7 @@ const Destinataire = (props) => {
             <Heading fontSize={'xl'}>Your patients</Heading>
             <Divider></Divider>
             <Button onClick={() => { handleSelectPatient("62f65031c87c9100196ec0a5"); setSelected(667) }} key={667} p='4' variant={667 == selected ? 'solid' : 'outline'} colorScheme={'gray'} cursor={'pointer'}>
-                <Text>Monsieur Zinzin</Text>
+                <Text>Monsieur Exemple</Text>
             </Button>
             {
                 patients?.map((element, index) => {
