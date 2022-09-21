@@ -9,7 +9,8 @@ const FormulairePatient = () => {
     const navigate = useNavigate()
     const toast = useToast()
 
-    const [name, setName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState();
     const [email, setEmail] = useState("");
     const [gender, setGender] = useState("male");
@@ -24,7 +25,7 @@ const FormulairePatient = () => {
             headers: { 'Accept': 'application/json','Content-Type':'application/json' },
             body: JSON.stringify({
                 resourceType:"Patient",
-                name:[{use:"official",given:[name]}],
+                name:[{use:"official",family:lastName,given:[firstName]}],
                 telecom:[{use:"home",system:"phone",value:phoneNumber},{use:"home",system:"email",value:email}],
                 gender:gender,
                 birthDate:birthDate,
@@ -36,7 +37,8 @@ const FormulairePatient = () => {
                 
           let resJson = await res.json();
           if (res.status === 200) {
-            setName("");
+            setFirstName("");
+            setLastName("");
             setEmail("");
             setAddress("")
             setBirthDate("")
@@ -74,10 +76,16 @@ const FormulairePatient = () => {
                 <Heading marginBottom={5}> Create a new Windoge patient's folder </Heading>
                 
                     <FormControl m={[2, 3]} w='xl'>
-                        <Stack marginBottom='5'>
-                            <FormLabel>First Name and Last Name</FormLabel>
-                            <Input type='text' onChange={(e) => setName(e.target.value)} />
-                        </Stack>
+                        <HStack marginBottom='5'>
+                            <Stack>
+                              <FormLabel>First Name</FormLabel>
+                              <Input type='text' onChange={(e) => setFirstName(e.target.value)} />  
+                            </Stack>
+                            <Stack>
+                              <FormLabel>Last Name</FormLabel>
+                              <Input type='text' onChange={(e) => setLastName(e.target.value)} />  
+                            </Stack>
+                        </HStack>
 
                         <FormLabel>Gender</FormLabel>
                         <RadioGroup defaultValue='male'>
