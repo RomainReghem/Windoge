@@ -1,4 +1,4 @@
-import { Center, Heading, Text, Stack, Input, Button, FormLabel, useToast, Divider, Image } from "@chakra-ui/react";
+import { Center, Heading, Text, Stack, Input, Button, FormLabel, useToast, Divider, Image, useColorModeValue } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, useDragControls } from "framer-motion"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -18,7 +18,7 @@ const Home = () => {
                 <motion.div drag={true} dragConstraints={constraintsRef} animate={{
                     y: [-20, 20, -20],
                     rotate: [2, -2, 2]
-                }} transition={{ duration: 3, repeat: Infinity }}><Image zIndex={1} h={'130px'} src='src\assets\chien.png' /></motion.div>
+                }} transition={{ duration: 3, repeat: Infinity }}><Image id='halo' zIndex={1} w='80px' transform='auto' translateY='30px' translateX= '5px' opacity={useColorModeValue(0,1)}   src='src\assets\halo_doge.png' /><Image zIndex={1} h={'130px'} src='src\assets\chien.png' /></motion.div>
                 <Stack alignItems={'center'} p='4'>
                     <Stack marginBottom={'0.5em'} alignItems='center'>
                         <Heading> Welcome to Windoge 5</Heading>
@@ -54,7 +54,7 @@ const Home = () => {
                 <motion.div drag={true} dragConstraints={constraintsRef} animate={{
                     y: [-20, 20, -20],
                     rotate: [-2, 2, -2]
-                }} transition={{ duration: 3, repeat: Infinity }}><Image transform={'scaleX(-1)'} h={'130px'} src='src\assets\chien.png' /></motion.div>
+                }} transition={{ duration: 3, repeat: Infinity }}><Image id='halo' zIndex={1} w='80px' transform='auto' translateY='30px' translateX= '5px' opacity={useColorModeValue(0,1)}   src='src\assets\halo_doge.png' /><Image transform={'scaleX(-1)'} h={'130px'} src='src\assets\chien.png' /></motion.div>
             </Center>
         </>
     )
