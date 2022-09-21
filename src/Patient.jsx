@@ -18,6 +18,7 @@ const Patient = ({ infos, highlight }) => {
     const [gender, setGender] = useState("Unknown gender");
     const [birth, setBirth] = useState("Unknown birth date");
     const [observations, setObservations] = useState(null);
+    const [appointments, setAppointments] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,6 +26,9 @@ const Patient = ({ infos, highlight }) => {
             fetch(`https://fhir.alliance4u.io/api/observation?subject.reference=Patient/${infos.id}`)
                 .then(response => response.json())
                 .then(data => setObservations(data));
+            fetch(`https://fhir.alliance4u.io/api/appointment?participant.actor.identifier.value=${infos.id}`)
+                .then(response => response.json())
+                .then(data => setAppointments(data));
         }
 
         if (infos.name) {
@@ -76,6 +80,31 @@ const Patient = ({ infos, highlight }) => {
                                         <AccordionPanel pb={4}>
                                             {element.code?.coding[0].display} : {element.valueQuantity?.value}{element.valueQuantity?.unit}
 
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                )
+                            } catch (error) {
+                                console.error("problème de formattage dans les observations")
+                            }
+
+                        })
+                    }
+
+{
+                        appointments?.map((element, index) => {
+                            try {
+                                return (
+                                    <AccordionItem key={index}>
+                                        <Heading>
+                                            <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
+                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
+                                                    Appointment {index + 1}
+                                                </Box>
+                                                <AccordionIcon />
+                                            </AccordionButton>
+                                        </Heading>
+                                        <AccordionPanel pb={4}>
+                                            {element.status && element?.status}
                                         </AccordionPanel>
                                     </AccordionItem>
                                 )
