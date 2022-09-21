@@ -65,32 +65,6 @@ const Patient = ({ infos, highlight }) => {
                 </Stack>
                 <Accordion allowToggle>
                     {
-                        observations?.map((element, index) => {
-                            try {
-                                return (
-                                    <AccordionItem key={index}>
-                                        <Heading>
-                                            <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
-                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
-                                                    Observation {index + 1} {element?.performer?.map((e) => `par ${e.display}`)}
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
-                                        </Heading>
-                                        <AccordionPanel pb={4}>
-                                            {element.code?.coding[0].display} : {element.valueQuantity?.value}{element.valueQuantity?.unit}
-
-                                        </AccordionPanel>
-                                    </AccordionItem>
-                                )
-                            } catch (error) {
-                                console.error("problème de formattage dans les observations")
-                            }
-
-                        })
-                    }
-
-                    {
                         appointments?.map((element, index) => {
                             try {
                                 return (

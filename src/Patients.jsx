@@ -24,7 +24,6 @@ const Patients = () => {
     }
 
     const onlyMyPatients = (checked) => {
-        console.log(checked)
         checked 
         ? setUrl("https://fhir.alliance4u.io/api/Patient?generalPractitioner.reference=6321e0f8d83022001917f14b") 
         : setUrl("https://fhir.alliance4u.io/api/Patient")
@@ -45,7 +44,7 @@ const Patients = () => {
             </Stack>
             <Stack spacing={5} direction='row'>
                 <Checkbox colorScheme='green' onChange={(e) => {onlyMyPatients(e.target.checked)}}>
-                    My patients
+                    Only show my patients
                 </Checkbox>
             </Stack>
             {
