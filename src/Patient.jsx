@@ -90,10 +90,11 @@ const Patient = ({ infos, highlight }) => {
                         })
                     }
 
-{
+                    {
                         appointments?.map((element, index) => {
                             try {
                                 return (
+                                    Date.parse(element.end) > Date.parse(new Date()) &&
                                     <AccordionItem key={index}>
                                         <Heading>
                                             <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
@@ -104,17 +105,18 @@ const Patient = ({ infos, highlight }) => {
                                             </AccordionButton>
                                         </Heading>
                                         <AccordionPanel pb={4}>
-                                            {element.status && element?.status}
+                                            {element.status && element?.status}<br/>
+                                            Début : {element?.start && element.start.split("T")[0]} à {element?.start && element.start.split("T")[1]}<br/>
+                                            Fin : {element?.end && element.end.split("T")[0]} à {element?.end && element.end.split("T")[1]}
                                         </AccordionPanel>
                                     </AccordionItem>
+
                                 )
                             } catch (error) {
                                 console.error("problème de formattage dans les observations")
                             }
-
                         })
                     }
-
                 </Accordion>
             </Stack>
         </>

@@ -1,4 +1,4 @@
-import { Text, Center, Badge, Stack, InputLeftElement, InputGroup, Input, Button, Spinner } from "@chakra-ui/react";
+import { Text, Center, Badge, Stack, InputLeftElement, InputGroup, Input, Button, Spinner, Checkbox } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -11,16 +11,25 @@ const Patients = () => {
     const [research, setResearch] = useState("")
     const [searchParams] = useSearchParams();
     const navigate = useNavigate()
+    const [url, setUrl] = useState("https://fhir.alliance4u.io/api/Patient");
 
     useEffect(() => {
-        fetch(`https://fhir.alliance4u.io/api/patient`)
+        fetch(url)
             .then(response => response.json())
             .then(data => setData(data));
-    }, [])
+    }, [url])
 
     const handleChange = e => {
         setResearch(e.target.value.toUpperCase())
     }
+
+    const onlyMyPatients = (checked) => {
+        console.log(checked)
+        checked 
+        ? setUrl("https://fhir.alliance4u.io/api/Patient?generalPractitioner.reference=6321e0f8d83022001917f14b") 
+        : setUrl("https://fhir.alliance4u.io/api/Patient")
+    }
+
 
     return (
         <Stack alignItems={'center'} flexDirection={'column'} flexGrow='1' gap='4' px='4' py={8} >
@@ -33,6 +42,11 @@ const Patients = () => {
                     <Input onChange={handleChange} type='tel' placeholder='Rechercher un patient...' />
                 </InputGroup>
                 <Button colorScheme={'green'} leftIcon={<FontAwesomeIcon icon={faPlus} />} onClick={() => navigate('/formulairepatient')}>Patient</Button>
+            </Stack>
+            <Stack spacing={5} direction='row'>
+                <Checkbox colorScheme='green' onChange={(e) => {onlyMyPatients(e.target.checked)}}>
+                    My patients
+                </Checkbox>
             </Stack>
             {
                 !data && <Spinner />
