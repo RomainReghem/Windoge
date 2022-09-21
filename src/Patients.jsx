@@ -40,7 +40,7 @@ const Patients = () => {
             {
                 Array.isArray(data) && data?.map((element, index) => {
                     if (element.name) {
-                        if (!research || element.name[0].family.toUpperCase().includes(research) || element.name[0].given.join().toUpperCase().includes(research)) {
+                        if (!research || element.name[0].family?.toUpperCase().includes(research) || element.name[0].given?.join().toUpperCase().includes(research)) {
                             return (
                                 <Patient key={index} infos={element} highlight={research} />
                             )

@@ -4,13 +4,13 @@ import { createSearchParams, useNavigate } from "react-router-dom";
 import Message from "./Message";
 import Destinataire from "./Destinataire";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRotateRight, faFolderOpen } from "@fortawesome/free-solid-svg-icons";
+import { faRotateRight, faFolderOpen, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const Messages = () => {
     const inputRef = useRef(null);
     const navigate = useNavigate();
     // l'ID du médecin Tina
-    const refMedecin = "6321e0f8d83022001917f14b"
+    const refMedecin = "7"
     // le patient élu (le médecin a cliqué sur lui), il change à chaque séléction
     const [chosen, setChosen] = useState("62f65031c87c9100196ec0a5")
     const [receivedMessages, setReceivedMessages] = useState(null);
@@ -139,30 +139,31 @@ const Messages = () => {
 
     return (
         <>
-            <Stack className="customH" direction="row">
+            <Stack className="customHeight1" direction="row">
                 <Destinataire onSelection={setChosen} />
-                <Stack h={'100%'} flexGrow={1}>
+                <Stack flexGrow={1}>
                     <Box boxShadow={'0 4px 10px -9px gray'} marginLeft={'-0.5rem'} p='2' borderBottom={'1px solid'} borderColor='gray.300' display={'flex'} flexDirection='row'>
                         <Text>Patient's reference is #{chosen}</Text>
                         <Tooltip bg={'verdigris.500'} placement="bottom" label="Open patient's folder">
-                            <IconButton onClick={() => navigate({pathname:"/dossier", search:createSearchParams({ref:chosen}).toString()})} colorScheme={'verdigris'} marginLeft={'2'} size={'xs'} icon={<FontAwesomeIcon icon={faFolderOpen} />} />
+                            <IconButton onClick={() => navigate({ pathname: "/dossier", search: createSearchParams({ ref: chosen }).toString() })} colorScheme={'verdigris'} marginLeft={'2'} size={'xs'} icon={<FontAwesomeIcon icon={faFolderOpen} />} />
                         </Tooltip>
                     </Box>
-                    <Stack px='4' className="customH" overflow='scroll' direction={'column-reverse'}>
-                        <Tooltip bg={'green.500'} placement="top" label='Load new messages'>
-                            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} />} onClick={loadMessages} isLoading={fetchingMessages} alignSelf={'center'} colorScheme='green' rounded={'full'} p='3' variant={'solid'}></IconButton>
+                    <Stack className="customHeight2" px='4' direction={'column-reverse'} overflowY='scroll'>
+
+                        <Tooltip bg={'blue.500'} placement="top" label='Load new messages'>
+                            <IconButton icon={<FontAwesomeIcon icon={faRotateRight} />} onClick={loadMessages} isLoading={fetchingMessages} alignSelf={'center'} colorScheme='blue' rounded={'full'} p='2' size={'sm'} variant={'solid'}></IconButton>
                         </Tooltip>
                         {
                             allMessages?.map((element, index) => {
                                 return <Message key={index} alignement={element?.sender?.reference.includes("Practitioner") ? "end" : "start"} content={element?.payload[0].contentString} />
                             })
                         }
-
                     </Stack>
+
                     <Stack p='4' paddingTop={0} h={'50px'} direction={'row'} align={'center'}>
                         <Input ref={inputRef} placeholder='Aa'></Input>
-                        <Button isLoading={sendingMessage} colorScheme={'celadon'} onClick={handleClick}>Médecin</Button>
-                        <Button isLoading={sendingMessage} colorScheme={'tan'} onClick={handlePatientClick}>Patient</Button>
+                        <Button rightIcon={<FontAwesomeIcon icon={faPaperPlane}/>} isLoading={sendingMessage} colorScheme={'green'} onClick={handleClick}>Médecin</Button>
+                        <Button isLoading={sendingMessage} variant='outline' colorScheme={'green'} onClick={handlePatientClick}>Patient (test)</Button>
                     </Stack>
                 </Stack>
             </Stack>

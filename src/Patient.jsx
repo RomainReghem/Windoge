@@ -1,4 +1,4 @@
-import { Divider, IconButton, Stack, Text, Box, Heading, Highlight } from "@chakra-ui/react";
+import { Divider, IconButton, Stack, Text, Box, Heading, Highlight, Tooltip } from "@chakra-ui/react";
 import {
     Accordion,
     AccordionItem,
@@ -18,6 +18,7 @@ const Patient = ({ infos, highlight }) => {
     const [gender, setGender] = useState("Unknown gender");
     const [birth, setBirth] = useState("Unknown birth date");
     const [observations, setObservations] = useState(null);
+    const [appointments, setAppointments] = useState(null)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,6 +26,9 @@ const Patient = ({ infos, highlight }) => {
             fetch(`https://fhir.alliance4u.io/api/observation?subject.reference=Patient/${infos.id}`)
                 .then(response => response.json())
                 .then(data => setObservations(data));
+            fetch(`https://fhir.alliance4u.io/api/appointment?participant.actor.identifier.value=${infos.id}`)
+                .then(response => response.json())
+                .then(data => setAppointments(data));
         }
 
         if (infos.name) {
@@ -40,7 +44,7 @@ const Patient = ({ infos, highlight }) => {
     }, [infos])
     return (
         <>
-            <Stack p='4' w={{base:'xs', md:'xl'}} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
+            <Stack p='4' w={{ base: 'xs', md: 'xl' }} boxShadow={'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;'}>
                 <Stack direction={'row'} justifyContent='space-between'>
                     <Heading fontSize={'2xl'}>
                         {highlight == "" ? name
@@ -50,7 +54,9 @@ const Patient = ({ infos, highlight }) => {
                             </Highlight>
                         }
                     </Heading>
-                    <IconButton onClick={() => navigate({pathname:"/dossier", search:createSearchParams({ref:infos?.id}).toString()})} colorScheme={'verdigris'} size={'sm'} icon={<FontAwesomeIcon icon={faFolderOpen} />}></IconButton>
+                    <Tooltip bg={'verdigris.500'} placement="right" label="Open patient's folder">
+                        <IconButton onClick={() => navigate({ pathname: "/dossier", search: createSearchParams({ ref: infos?.id }).toString() })} colorScheme={'verdigris'} size={'sm'} icon={<FontAwesomeIcon icon={faFolderOpen} />}></IconButton>
+                    </Tooltip>
                 </Stack>
                 <Divider></Divider>
                 <Stack>
@@ -62,25 +68,49 @@ const Patient = ({ infos, highlight }) => {
                         observations?.map((element, index) => {
                             try {
                                 return (
-                                <AccordionItem key={index}>
-                                    <Heading>
-                                        <AccordionButton bg={'celadon.50'} _hover={{backgroundColor:'#c2deee'}}>
-                                            <Box flex='1' textAlign='left'>
-                                                Observation {index+1} {element?.performer?.map((e) => `par ${e.display}`)}
-                                            </Box>
-                                            <AccordionIcon />
-                                        </AccordionButton>
-                                    </Heading>
-                                    <AccordionPanel pb={4}>
-                                        {element.code?.coding[0].display} : {element.valueQuantity?.value}{element.valueQuantity?.unit}
+                                    <AccordionItem key={index}>
+                                        <Heading>
+                                            <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
+                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
+                                                    Observation {index + 1} {element?.performer?.map((e) => `par ${e.display}`)}
+                                                </Box>
+                                                <AccordionIcon />
+                                            </AccordionButton>
+                                        </Heading>
+                                        <AccordionPanel pb={4}>
+                                            {element.code?.coding[0].display} : {element.valueQuantity?.value}{element.valueQuantity?.unit}
 
-                                    </AccordionPanel>
-                                </AccordionItem>
-                            )
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                )
                             } catch (error) {
                                 console.error("problème de formattage dans les observations")
                             }
-                            
+
+                        })
+                    }
+
+{
+                        appointments?.map((element, index) => {
+                            try {
+                                return (
+                                    <AccordionItem key={index}>
+                                        <Heading>
+                                            <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
+                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
+                                                    Appointment {index + 1}
+                                                </Box>
+                                                <AccordionIcon />
+                                            </AccordionButton>
+                                        </Heading>
+                                        <AccordionPanel pb={4}>
+                                            {element.status && element?.status}
+                                        </AccordionPanel>
+                                    </AccordionItem>
+                                )
+                            } catch (error) {
+                                console.error("problème de formattage dans les observations")
+                            }
 
                         })
                     }
