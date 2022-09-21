@@ -1,15 +1,26 @@
-import { Center, Heading, Text, Stack, Input, Button, FormLabel, useToast, Divider } from "@chakra-ui/react";
+import { Center, Heading, Text, Stack, Input, Button, FormLabel, useToast, Divider, Image } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion, useDragControls } from "framer-motion"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faCircleRight, faRightLong } from "@fortawesome/free-solid-svg-icons";
+import { useRef } from "react";
 
 
 const Home = () => {
+    const controls = useDragControls()
+    const constraintsRef = useRef(null)
+
     const toast = useToast()
     const navigate = useNavigate()
     return (
         <>
-            <Center h={'100%'} flexDirection='column'>
-                <Stack alignItems={'center'} p='4' gap='2'>
-                    <Stack marginBottom={'2em'} alignItems='center'>
+            <Center h={'100%'} flexDirection={['column', 'row']} gap={'6'} ref={constraintsRef}>
+                <motion.div drag={true} dragConstraints={constraintsRef} animate={{
+                    y: [-20, 20, -20],
+                    rotate: [2, -2, 2]
+                }} transition={{ duration: 3, repeat: Infinity }}><Image zIndex={1} h={'130px'} src='src\assets\chien.png' /></motion.div>
+                <Stack alignItems={'center'} p='4'>
+                    <Stack marginBottom={'0.5em'} alignItems='center'>
                         <Heading> Welcome to Windoge 5</Heading>
                         <Heading fontWeight={'600'} fontSize={'xl'}>Your trusty link with your patients</Heading>
                     </Stack>
@@ -20,8 +31,9 @@ const Home = () => {
                         <Text fontWeight={'600'}>Password</Text>
                         <Input variant='filled' placeholder='Enter your password'></Input>
                     </Stack>
-                    <Stack width='xs' align='center'>
-                        <Button width='30%'
+                    <Stack width='xs'>
+                        <Button
+                            rightIcon={<FontAwesomeIcon icon={faCircleRight} />}
                             colorScheme={'green'}
                             onClick={() => {
                                 toast({
@@ -39,6 +51,10 @@ const Home = () => {
                         </Button>
                     </Stack>
                 </Stack>
+                <motion.div drag={true} dragConstraints={constraintsRef} animate={{
+                    y: [-20, 20, -20],
+                    rotate: [-2, 2, -2]
+                }} transition={{ duration: 3, repeat: Infinity }}><Image transform={'scaleX(-1)'} h={'130px'} src='src\assets\chien.png' /></motion.div>
             </Center>
         </>
     )

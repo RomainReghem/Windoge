@@ -1,10 +1,10 @@
-import { Divider, IconButton, Stack, Text, Box, Heading, Highlight, Tooltip, Badge } from "@chakra-ui/react";
+import { Divider, IconButton, Stack, Text, Box, Heading, Highlight, Tooltip, Badge, Tag } from "@chakra-ui/react";
 import {
     Accordion,
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon,
+    AccordionIcon,useColorModeValue
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faFolderOpen } from '@fortawesome/free-solid-svg-icons'
@@ -16,7 +16,7 @@ const Patient = ({ infos, highlight }) => {
 
     const [name, setName] = useState("Unknown");
     const [gender, setGender] = useState("Unknown gender");
-    const [birth, setBirth] = useState("Unknown birth date");
+    const [birth, setBirth] = useState(null);
     const [observations, setObservations] = useState(null);
     const [appointments, setAppointments] = useState(null)
     const navigate = useNavigate();
@@ -60,8 +60,11 @@ const Patient = ({ infos, highlight }) => {
                 </Stack>
                 <Divider></Divider>
                 <Stack>
-                    <Text>{gender}</Text>
-                    <Text>{birth}</Text>
+                    {birth && <Text>Born on {birth}</Text>}
+                    
+                    {observations?.length > 0 ?
+
+                        <Tag>{observations?.length} observations on patient's folder</Tag> : <Tag>No observations yet</Tag>}
                 </Stack>
                 <Accordion allowToggle>
                     {
@@ -71,7 +74,7 @@ const Patient = ({ infos, highlight }) => {
                                     Date.parse(element.end) > Date.parse(new Date()) &&
                                     <AccordionItem key={index}>
                                         <Heading>
-                                            <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
+                                            <AccordionButton bg={useColorModeValue('celadon.50', 'gray.700')} _hover={{ backgroundColor: useColorModeValue('celadon.100', 'gray.600') }}>
                                                 <Box flex='1' textAlign='left' fontFamily={'body'}>
                                                     Appointment ({element?.start && element.start.split("T")[0]})
                                                 </Box>
@@ -79,10 +82,10 @@ const Patient = ({ infos, highlight }) => {
                                             </AccordionButton>
                                         </Heading>
                                         <AccordionPanel pb={4}>
-                                            {element.status && <Badge colorScheme={element.status == "booked" && "green"}>{element?.status}</Badge>}<br/>
-                                            Begins : {element?.start && element.start.split("T")[0]} at {element?.start && element.start.split("T")[1]}<br/>
-                                            Ends : {element?.end && element.end.split("T")[0]} at {element?.end && element.end.split("T")[1]}<br/>
-                                            Duration : {element?.minutesDuration && element?.minutesDuration } minutes
+                                            {element.status && <Badge colorScheme={element.status == "booked" && "green"}>{element?.status}</Badge>}<br />
+                                            Begins : {element?.start && element.start.split("T")[0]} at {element?.start && element.start.split("T")[1]}<br />
+                                            Ends : {element?.end && element.end.split("T")[0]} at {element?.end && element.end.split("T")[1]}<br />
+                                            Duration : {element?.minutesDuration && element?.minutesDuration} minutes
                                         </AccordionPanel>
                                     </AccordionItem>
 

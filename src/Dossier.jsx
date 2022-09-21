@@ -8,7 +8,7 @@ import {
     ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton, useDisclosure
+    ModalCloseButton, useDisclosure, useColorModeValue
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -19,7 +19,7 @@ const Dossier = () => {
     const [infos, setInfos] = useState({
         gender: "N/A",
         dateOfBirth: "N/A",
-        adresse: "N/A",
+        address: "N/A",
         phone: "N/A",
         mail: "N/A"
     })
@@ -61,10 +61,29 @@ const Dossier = () => {
 
 
         data?.telecom?.map((element, index) => {
-            
+            if (element.system && element.system == "phone" && element.value) {
+                setInfos(prevState => ({
+                    ...prevState,
+                    phone: element.value
+                }))
+            } else if (element.system && element.system == "email" && element.value) {
+                setInfos(prevState => ({
+                    ...prevState,
+                    mail: element.value
+                }))
+            }
         })
 
+        try {
+            if (data?.address && data?.address[0] && data?.address[0].city && data?.address[0].city) {
+                setInfos(prevState => ({
+                    ...prevState,
+                    address: `${data.address[0].city}, ${data.address[0].country}`
+                }))
+            }
+        } catch (error) {
 
+        }
     }, [data])
 
     const loadObservations = () => {
@@ -121,7 +140,7 @@ const Dossier = () => {
 
     return (
         <>
-            <Center p={4} flexDirection={'column'} flexGrow={1}>
+            <Center p={6} flexDirection={'column'} flexGrow={1}>
                 <Stack w={['xs', 'lg']} gap={2}>
                     <Stack alignItems={'center'}>
                         <Tooltip placement="top" label={`Patient's ref : ${searchParams?.get("ref")}`}>
@@ -136,8 +155,8 @@ const Dossier = () => {
                             <Heading fontSize={'xl'}>Informations</Heading>
                             <Text>Gender : {infos.gender}</Text>
                             <Text>Date of birth : {infos.dateOfBirth}</Text>
-                            <Text>Adresse : {infos.adresse}</Text>
-                            <Text>Téléphone : {infos.phone}</Text>
+                            <Text>Adress : {infos.address}</Text>
+                            <Text>Phone : {infos.phone}</Text>
                             <Text>Email : {infos.mail}</Text>
                         </Stack>
 
@@ -154,16 +173,17 @@ const Dossier = () => {
                             <Modal isOpen={isOpen} onClose={onClose}>
                                 <ModalOverlay />
                                 <ModalContent>
-                                    <ModalHeader>New observation</ModalHeader>
+                                    <ModalHeader>Create an observation</ModalHeader>
                                     <ModalCloseButton />
                                     <ModalBody>
+                                    <Stack>
                                         <Textarea onChange={(e) => { setObsText(e.target.value) }} placeholder="Description de l'observation">
                                         </Textarea>
                                         <Stack direction={'row'}>
                                             <Input placeholder="valeur" type={'number'} onChange={(e) => { setObsValue(e.target.value) }}></Input>
                                             <Input placeholder='unité' onChange={(e) => { setObsUnit(e.target.value) }}></Input>
                                         </Stack>
-                                    </ModalBody>
+                                    </Stack></ModalBody>
 
                                     <ModalFooter>
                                         <Button colorScheme='red' mr={3} onClick={onClose}>
@@ -180,7 +200,7 @@ const Dossier = () => {
                                             return (
                                                 <AccordionItem key={index}>
                                                     <Heading>
-                                                        <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
+                                                        <AccordionButton bg={useColorModeValue('celadon.50', 'gray.700')} _hover={{ backgroundColor: useColorModeValue('celadon.100', 'gray.600') }}>
                                                             <Box flex='1' textAlign='left' fontFamily={'body'}>
                                                                 Observation {index + 1} {element?.performer?.map((e) => `par ${e.display}`)}
                                                             </Box>
