@@ -16,7 +16,7 @@ const Destinataire = (props) => {
     }
 
     return (
-        <Stack w={'2xs'} borderRight={'1px solid'} borderColor='gray.300' p={'4'} overflow='scroll'>
+        <Stack w={'2xs'} borderRight={'1px solid'} borderColor='gray.300' p={'4'} overflow='auto'>
             <Heading fontSize={'xl'}>Your patients</Heading>
             <Divider></Divider>
             {

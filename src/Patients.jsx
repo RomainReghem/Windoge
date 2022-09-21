@@ -7,6 +7,7 @@ import Patient from "./Patient"
 import { useEffect, useState } from "react";
 
 const Patients = () => {
+    
     const [data, setData] = useState(null)
     const [research, setResearch] = useState("")
     const [searchParams] = useSearchParams();

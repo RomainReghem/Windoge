@@ -18,7 +18,7 @@ const Home = () => {
                 <motion.div drag={true} dragConstraints={constraintsRef} animate={{
                     y: [-20, 20, -20],
                     rotate: [2, -2, 2]
-                }} transition={{ duration: 3, repeat: Infinity }}><Image h={'130px'} src='src\assets\chien.png' /></motion.div>
+                }} transition={{ duration: 3, repeat: Infinity }}><Image zIndex={1} h={'130px'} src='src\assets\chien.png' /></motion.div>
                 <Stack alignItems={'center'} p='4'>
                     <Stack marginBottom={'0.5em'} alignItems='center'>
                         <Heading> Welcome to Windoge 5</Heading>

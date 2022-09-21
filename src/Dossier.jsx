@@ -8,7 +8,7 @@ import {
     ModalHeader,
     ModalFooter,
     ModalBody,
-    ModalCloseButton, useDisclosure
+    ModalCloseButton, useDisclosure, useColorModeValue
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -200,7 +200,7 @@ const Dossier = () => {
                                             return (
                                                 <AccordionItem key={index}>
                                                     <Heading>
-                                                        <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
+                                                        <AccordionButton bg={useColorModeValue('celadon.50', 'gray.700')} _hover={{ backgroundColor: useColorModeValue('celadon.100', 'gray.600') }}>
                                                             <Box flex='1' textAlign='left' fontFamily={'body'}>
                                                                 Observation {index + 1} {element?.performer?.map((e) => `par ${e.display}`)}
                                                             </Box>
