@@ -25,7 +25,7 @@ const Patients = () => {
 
     const onlyMyPatients = (checked) => {
         checked 
-        ? setUrl("https://fhir.alliance4u.io/api/Patient?generalPractitioner.reference=6321e0f8d83022001917f14b") 
+        ? setUrl("https://fhir.alliance4u.io/api/Patient?generalPractitioner.reference=Practitioner/7") 
         : setUrl("https://fhir.alliance4u.io/api/Patient")
     }
 
