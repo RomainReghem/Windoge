@@ -11,7 +11,7 @@ const Calendar = () => {
             <ScheduleComponent width='75%' height='500px' >
             <Inject services={[Day, Week, WorkWeek, Month, Agenda, MonthAgenda, TimelineViews, TimelineMonth ]} />
             </ScheduleComponent>
-            <Badge colorScheme='purple'>Planning</Badge>
+            
             </Stack>
         </Center>
         </>

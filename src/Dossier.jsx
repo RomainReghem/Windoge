@@ -11,9 +11,11 @@ import {
     ModalCloseButton, useDisclosure, useColorModeValue
 } from '@chakra-ui/react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
 
 const Dossier = () => {
+    const navigate = useNavigate()
     const [searchParams] = useSearchParams();
     const [name, setName] = useState("Firstname Lastname");
     const [infos, setInfos] = useState({
@@ -140,6 +142,7 @@ const Dossier = () => {
 
     return (
         <>
+        <IconButton icon={<FontAwesomeIcon icon={faArrowLeft} />} onClick={() => navigate(-1)} w={'40px'} m={2} marginBottom={5}></IconButton>
             <Center p={6} flexDirection={'column'} flexGrow={1}>
                 <Stack w={['xs', 'lg']} gap={2}>
                     <Stack alignItems={'center'}>

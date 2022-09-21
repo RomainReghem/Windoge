@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Box, Text} from "@chakra-ui/react"
+import { Box, Accordion, Text, Heading, IconButton } from "@chakra-ui/react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-const DemandeRDV= ()=>{
+const DemandeRDV = () => {
 
     const [url, setUrl] = useState("https://fhir.alliance4u.io/api/Appointment");
     const [data, setData] = useState(null)
@@ -9,21 +11,74 @@ const DemandeRDV= ()=>{
     useEffect(() => {
         fetch(url)
             .then(response => response.json())
-            .then(data => setData(data.filter(element => element.participant[1]?.actor.identifier.value == "7")));
+            .then(data => setData(data.filter(element => element.participant[1]?.actor.identifier.value == "7" && element.status == "pending")));
     }, [url])
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(data)
-    },[data]
+    }, [data]
     )
 
-    return(
+    return (
         <>
-         <center>
-            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-                
-            </Box>
-         </center>
+            <center>
+            <Heading m={5}> Your appointment requests </Heading>
+                {data?.map((element, index) => {
+                    try {
+                        return (
+                            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'm={[2, 3]}>
+                                <Box flex='1' textAlign='left' fontFamily={'body'} borderRadius='md' bg='#9AE6B4' color='white' px={4} h={8}>
+                                    Appointment ({element?.start && element.start.split("T")[0]})
+                                </Box>
+                                <Box pb={4}>
+                                {/* {element.status && <Badge colorScheme={element.status == "booked" && "green"}>{element?.status}</Badge>} */}<br />
+                                    Begins : {element?.start && element.start.split("T")[0]} at {element?.start && element.start.split("T")[1]}<br />
+                                    Ends : {element?.end && element.end.split("T")[0]} at {element?.end && element.end.split("T")[1]}<br />
+                                    {/*Duration : {element?.minutesDuration && element?.minutesDuration} minutes*/}
+                                </Box>
+                                <IconButton icon={<FontAwesomeIcon icon={faXmark} />}  w={'40px'} m={2} marginBottom={5}/>
+                                <IconButton icon={<FontAwesomeIcon icon={faCheck} />} w={'40px'} m={2} marginBottom={5}/>
+                            </Box>
+                        )
+                    } catch (error) {
+
+                    }
+
+
+                })}
+
+                {/* <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+            <Accordion allowToggle>
+                    {
+                        data?.map((element, index) => {
+                            try {
+                                return (
+                                    Date.parse(element.end) > Date.parse(new Date()) &&
+                                    <AccordionItem key={index}>
+                                        <Heading>
+                                            <AccordionButton bg={useColorModeValue('celadon.50', 'gray.700')} _hover={{ backgroundColor: useColorModeValue('celadon.100', 'gray.600') }}>
+                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
+                                                    Appointment ({element?.start && element.start.split("T")[0]})
+                                                </Box>
+                                                <AccordionIcon />
+                                            </AccordionButton>
+                                        </Heading>
+                                        <AccordionPanel pb={4}>
+                                            {element.status && <Badge colorScheme={element.status == "booked" && "green"}>{element?.status}</Badge>}<br />
+                                            Begins : {element?.start && element.start.split("T")[0]} at {element?.start && element.start.split("T")[1]}<br />
+                                            Ends : {element?.end && element.end.split("T")[0]} at {element?.end && element.end.split("T")[1]}<br />
+                                            Duration : {element?.minutesDuration && element?.minutesDuration} minutes
+                                        </AccordionPanel>
+                                    </AccordionItem>
+
+                                )
+                            } catch (error) {
+                                console.error("problème de formatage dans les observations")
+                            }
+                        })
+                    }
+                </Accordion></Box> */}
+            </center>
         </>
     )
 

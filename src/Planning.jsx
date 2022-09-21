@@ -1,4 +1,4 @@
-import { Text, Badge, Stack, Center } from "@chakra-ui/react";
+import { Text, Badge, Stack, Center, Flex } from "@chakra-ui/react";
 import Calendar from "./Calendar";
 import DemandeRDV from "./DemandeRDV";
 
@@ -6,7 +6,11 @@ import DemandeRDV from "./DemandeRDV";
 const Planning = () => {
     return(
         <>
-            <DemandeRDV/>
+            <Flex>
+              <DemandeRDV/>
+              <Calendar/>  
+            </Flex>
+            
         </>
 
     )
