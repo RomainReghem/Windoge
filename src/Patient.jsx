@@ -1,4 +1,4 @@
-import { Divider, IconButton, Stack, Text, Box, Heading, Highlight, Tooltip } from "@chakra-ui/react";
+import { Divider, IconButton, Stack, Text, Box, Heading, Highlight, Tooltip, Badge } from "@chakra-ui/react";
 import {
     Accordion,
     AccordionItem,
@@ -73,15 +73,16 @@ const Patient = ({ infos, highlight }) => {
                                         <Heading>
                                             <AccordionButton bg={'celadon.50'} _hover={{ backgroundColor: '#c2deee' }}>
                                                 <Box flex='1' textAlign='left' fontFamily={'body'}>
-                                                    Appointment {index + 1}
+                                                    Appointment ({element?.start && element.start.split("T")[0]})
                                                 </Box>
                                                 <AccordionIcon />
                                             </AccordionButton>
                                         </Heading>
                                         <AccordionPanel pb={4}>
-                                            {element.status && element?.status}<br/>
-                                            Début : {element?.start && element.start.split("T")[0]} à {element?.start && element.start.split("T")[1]}<br/>
-                                            Fin : {element?.end && element.end.split("T")[0]} à {element?.end && element.end.split("T")[1]}
+                                            {element.status && <Badge colorScheme={element.status == "booked" && "green"}>{element?.status}</Badge>}<br/>
+                                            Begins : {element?.start && element.start.split("T")[0]} at {element?.start && element.start.split("T")[1]}<br/>
+                                            Ends : {element?.end && element.end.split("T")[0]} at {element?.end && element.end.split("T")[1]}<br/>
+                                            Duration : {element?.minutesDuration && element?.minutesDuration } minutes
                                         </AccordionPanel>
                                     </AccordionItem>
 
