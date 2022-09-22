@@ -6,14 +6,13 @@ import './Calendar.css'
 const Calendar = () => {
     return(
         <>
-        <Center h={'100%'}>
+        
             <Stack align={'center'}>
-            <ScheduleComponent width='75%' height='500px' >
+            <ScheduleComponent >
             <Inject services={[Day, Week, WorkWeek, Month, Agenda, MonthAgenda, TimelineViews, TimelineMonth ]} />
             </ScheduleComponent>
             
             </Stack>
-        </Center>
         </>
 
     )

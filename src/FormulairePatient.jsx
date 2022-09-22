@@ -71,18 +71,17 @@ const FormulairePatient = () => {
 
     return (
         <>
-            <IconButton icon={<FontAwesomeIcon icon={faArrowLeft} />} onClick={() => navigate(-1)} w={'40px'} m={2} marginBottom={5}></IconButton>
-            <Center h={'100%'} flexDirection='column'>
+            <Center h={'100%'} flexDirection='column' p='4'>
                 <Heading marginBottom={5}> Create a new Windoge patient's folder </Heading>
                 
                     <FormControl m={[2, 3]} w='xl'>
-                        <HStack marginBottom='5'>
+                        <HStack marginBottom='2'>
                             <Stack>
-                              <FormLabel>First Name</FormLabel>
+                              <FormLabel my={0}>First Name</FormLabel>
                               <Input type='text' onChange={(e) => setFirstName(e.target.value)} />  
                             </Stack>
                             <Stack>
-                              <FormLabel>Last Name</FormLabel>
+                              <FormLabel my={0}>Last Name</FormLabel>
                               <Input type='text' onChange={(e) => setLastName(e.target.value)} />  
                             </Stack>
                         </HStack>
@@ -97,26 +96,26 @@ const FormulairePatient = () => {
                             </HStack>
                         </RadioGroup>
 
-                        <HStack marginBottom='5'>
+                        <HStack marginBottom='3'>
                             <Stack>
-                                <FormLabel>Date of Birth</FormLabel>
+                                <FormLabel my={0}>Date of Birth</FormLabel>
                                 <Input type='date' onChange={(e) => setBirthDate(e.target.value)} />
                             </Stack>
                         </HStack>
 
-                        <Stack marginBottom='5'>
-                            <FormLabel>Address</FormLabel>
+                        <Stack marginBottom='3'>
+                            <FormLabel my={0}>Address</FormLabel>
                             <Input type='text' onChange={(e) => setAddress(e.target.value)} />
                         </Stack>
                         <Stack>
-                            <FormLabel>Contact</FormLabel>
+                            <FormLabel my={0}>Contact</FormLabel>
                             <HStack>
                                 <Input type='tel' placeholder='Phone Number' onChange={(e) => setPhoneNumber(e.target.value)} />
                                 <Input type='email' placeholder='Email'onChange={(e) => setEmail(e.target.value)}  />
                             </HStack>
                         </Stack>
                     </FormControl>
-                    <Button type='submit' mt={10} colorScheme={"green"} onClick={handleSubmit}>Submit</Button>
+                    <Button type='submit' colorScheme={"green"} onClick={handleSubmit}>Submit</Button>
                 
                     
                 

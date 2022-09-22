@@ -4,13 +4,17 @@ import DemandeRDV from "./DemandeRDV";
 
 
 const Planning = () => {
-    return(
+    return (
         <>
-            <Flex>
-              <DemandeRDV/>
-              <Calendar/>  
-            </Flex>
-            
+            <Center gap={10}>
+                <Stack maxW={'sm'}>
+                    <DemandeRDV />
+                </Stack>
+                <Stack maxW={'70%'}>
+                    <Calendar />
+                </Stack>
+            </Center>
+
         </>
 
     )
