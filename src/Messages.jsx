@@ -12,7 +12,7 @@ const Messages = () => {
     // l'ID du médecin Tina
     const refMedecin = "7"
     // le patient élu (le médecin a cliqué sur lui), il change à chaque séléction
-    const [chosen, setChosen] = useState("62f65031c87c9100196ec0a5")
+    const [chosen, setChosen] = useState("6322e3bf76c6f7001a59728d")
     const [receivedMessages, setReceivedMessages] = useState(null);
     const [sentMessages, setSentMessages] = useState(null)
     const [allMessages, setAllMessages] = useState(null);
