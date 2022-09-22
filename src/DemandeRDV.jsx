@@ -26,7 +26,7 @@ const DemandeRDV = () => {
                 {data?.map((element, index) => {
                     try {
                         return (
-                            <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'm={[2, 3]}>
+                            <Box key={index} maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'm={[2, 3]}>
                                 <Box flex='1' textAlign='left' fontFamily={'body'} borderRadius='md' bg='#9AE6B4' color='white' px={4} h={8}>
                                     Appointment ({element?.start && element.start.split("T")[0]})
                                 </Box>
@@ -46,38 +46,6 @@ const DemandeRDV = () => {
 
 
                 })}
-
-                {/* <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
-            <Accordion allowToggle>
-                    {
-                        data?.map((element, index) => {
-                            try {
-                                return (
-                                    Date.parse(element.end) > Date.parse(new Date()) &&
-                                    <AccordionItem key={index}>
-                                        <Heading>
-                                            <AccordionButton bg={useColorModeValue('celadon.50', 'gray.700')} _hover={{ backgroundColor: useColorModeValue('celadon.100', 'gray.600') }}>
-                                                <Box flex='1' textAlign='left' fontFamily={'body'}>
-                                                    Appointment ({element?.start && element.start.split("T")[0]})
-                                                </Box>
-                                                <AccordionIcon />
-                                            </AccordionButton>
-                                        </Heading>
-                                        <AccordionPanel pb={4}>
-                                            {element.status && <Badge colorScheme={element.status == "booked" && "green"}>{element?.status}</Badge>}<br />
-                                            Begins : {element?.start && element.start.split("T")[0]} at {element?.start && element.start.split("T")[1]}<br />
-                                            Ends : {element?.end && element.end.split("T")[0]} at {element?.end && element.end.split("T")[1]}<br />
-                                            Duration : {element?.minutesDuration && element?.minutesDuration} minutes
-                                        </AccordionPanel>
-                                    </AccordionItem>
-
-                                )
-                            } catch (error) {
-                                console.error("problème de formatage dans les observations")
-                            }
-                        })
-                    }
-                </Accordion></Box> */}
             </center>
         </>
     )
